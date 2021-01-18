@@ -1,16 +1,14 @@
-const path = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-module.exports = {
+const path = require("path");
+
+const config = {
 // add plugins to direct webpack on what to do
 // even though jquery package is added, we need to write in plugin
 plugins: [
     new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery"
-    }),
-    new webpack.ProvidePlugin({
-        $: "jquery"
     }),
     new BundleAnalyzerPlugin({
         // the report outputs to an HTML called report.html in the dist folder
@@ -59,3 +57,5 @@ module: {
 // the mode we want the webpack to run in, production is default
 mode: 'development'
 };
+
+module.exports = config;
