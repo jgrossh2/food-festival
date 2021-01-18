@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const path = require("path");
+const WebpackPwaManifest = require("webpack-pwa-manifest");
 
 const config = {
 // add plugins to direct webpack on what to do
@@ -14,8 +15,28 @@ plugins: [
         // the report outputs to an HTML called report.html in the dist folder
         // can set to disable to temp. stop reporting and opening of report 
         analyzerMode: "static",
-
-    })
+    }),
+    // new invokes a contructor function
+    new WebpackPwaManifest({
+        name: "Food Event",
+        short_name: "Foodies",
+        description: "An app that allows you to view upcoming food events.",
+        start_url: "../index.html",
+        background_color: "#01579b",
+        theme_color: "#ffffff",
+        // specific to manifest plugin
+        // fingerprints tell webpack if it should generate unique fingerprints per generated manifest
+        fingerprints: false,
+        // decides whether the link is added to html
+        inject: false,
+        icons: [{
+            // path to the icon image
+            // destination is where icons sent after creation of web manifest
+          src: path.resolve("assets/img/icons/icon-512x512.png"),
+          sizes: [96, 128, 192, 256, 384, 512],
+          destination: path.join("assets", "icons")
+        }]
+      })
 ],
 // root of the bundle and beginning of dependency graph, gives relative path of code
 entry: {
